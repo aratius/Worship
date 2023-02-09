@@ -11,16 +11,9 @@ namespace Worship.Member
     public class OscSender : SingletonMonoBehaviour<OscSender>
     {
 
-        [SerializeField] string m_DefaultIp;
-        [SerializeField] int m_DefaultPort;
         List<string> m_History = new List<string>();
 
         OscClient m_Client;
-
-        void Start()
-        {
-            Set(m_DefaultIp, m_DefaultPort);
-        }
 
         /// <summary>
         /// set

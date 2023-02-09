@@ -12,15 +12,9 @@ namespace Worship.Member
     {
 
         public UnityEvent<int> onInstruction = new UnityEvent<int>();
-        [SerializeField] int m_DefaultPort;
         List<string> m_History = new List<string>();
 
         OscServer m_Server;
-
-        void Start()
-        {
-            Set(m_DefaultPort);
-        }
 
         /// <summary>
         /// set
