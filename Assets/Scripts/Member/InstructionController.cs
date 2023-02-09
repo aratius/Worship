@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Worship.Member;
+using Worship.Common;
 
 public class InstructionController : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class InstructionController : MonoBehaviour
 
   void Start()
   {
-    OscReceiver.Instance.onSign.AddListener(this._onSign);
+    OscReceiver.Instance.onInstruction.AddListener(OnInstruction);
     Sound.LoadSe("standUp", "standUp");
     Sound.LoadSe("sitDown", "sitDown");
     Sound.LoadSe("handsUp", "handsUp");
@@ -23,36 +25,38 @@ public class InstructionController : MonoBehaviour
   /// on sign
   /// </summary>
   /// <param name="address"></param>
-  private void _onSign(string address)
+  void OnInstruction(int data)
   {
     // TODO: 音再生
 
-    if(address == "/handsUp")
+    Instruction? instruction = data as Instruction?;
+    if(instruction == null) return;
+    if(instruction == Instruction.HandsUp)
     {
       Sound.PlaySe("handsUp");
-    } else if (address == "/handsDown")
+    } else if (instruction == Instruction.HandsDown)
     {
       Sound.PlaySe("handsDown");
-    } else if (address == "/standUp")
+    } else if (instruction == Instruction.StandUp)
     {
       Sound.PlaySe("standUp");
-    } else if (address == "/sitDown")
+    } else if (instruction == Instruction.SitDown)
     {
       Sound.PlaySe("sitDown");
-    } else if(address == "/tutorial")
+    } else if(instruction == Instruction.Tutorial)
     {
       Sound.PlaySe("tutorial");
-    } else if (address == "/finish")
+    } else if (instruction == Instruction.Finish)
     {
       Sound.PlaySe("finish");
-    } else if(address == "/stop") {
+    } else if(instruction == Instruction.Stop) {
       Sound.StopSe();
     } {
       Debug.LogWarning("undefined instruction");
       return;
     };
 
-    this._histories.Set(DateTime.Now.ToString("HH:mm:ss"), address, "undefined");
+    this._histories.Set(DateTime.Now.ToString("HH:mm:ss"), data.ToString(), "undefined");
   }
 
 }

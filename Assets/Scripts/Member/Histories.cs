@@ -2,40 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Worship.Member;
 
-public struct HistoryValues
-{
-  public string ts;
-  public string address;
-  public string value;
-  public HistoryValues(string _ts, string _address, string _value)
-  {
-    this.ts = _ts;
-    this.address = _address;
-    this.value = _value;
-  }
-}
-
-public class Histories : MonoBehaviour
+namespace Worship.Member
 {
 
-  [SerializeField] private History[] _histories;
-
-  /// <summary>
-  /// set newest value
-  /// </summary>
-  /// <param name="ts"></param>
-  /// <param name="address"></param>
-  /// <param name="value"></param>
-  public void Set(string ts, string address, string value)
+  public struct HistoryValues
   {
-    HistoryValues lastHistoryValues = new HistoryValues(ts, address, value);
-    foreach(History history in this._histories)
+    public string ts;
+    public string data;
+    public string value;
+    public HistoryValues(string _ts, string _data, string _value)
     {
-      HistoryValues thisHistoryValues = history.Get();
-      history.Set(lastHistoryValues);
-      lastHistoryValues = thisHistoryValues;
+      ts = _ts;
+      data = _data;
+      value = _value;
     }
+  }
+
+  public class Histories : MonoBehaviour
+  {
+
+    [SerializeField] private History[] m_Histories;
+
+    /// <summary>
+    /// set newest value
+    /// </summary>
+    /// <param name="ts"></param>
+    /// <param name="data"></param>
+    /// <param name="value"></param>
+    public void Set(string ts, string data, string value)
+    {
+      HistoryValues lastHistoryValues = new HistoryValues(ts, data, value);
+      foreach(History history in m_Histories)
+      {
+        HistoryValues thisHistoryValues = history.Get();
+        history.Set(lastHistoryValues);
+        lastHistoryValues = thisHistoryValues;
+      }
+    }
+
   }
 
 }

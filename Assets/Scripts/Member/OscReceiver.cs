@@ -5,57 +5,62 @@ using UnityEngine.Events;
 using OscJack;
 using Cysharp.Threading.Tasks;
 
-public class OscReceiver : SingletonMonoBehaviour<OscReceiver>
+namespace Worship.Member
 {
 
-    public UnityEvent<string> onSign = new UnityEvent<string>();
-    [SerializeField] private int _defaultPort;
-    private List<string> _history = new List<string>();
-
-    private OscServer _server;
-
-    void Start()
+    public class OscReceiver : SingletonMonoBehaviour<OscReceiver>
     {
-        this.Set(this._defaultPort);
-    }
 
-    /// <summary>
-    /// set
-    /// </summary>
-    /// <param name="port"></param>
-    public void Set(int port)
-    {
-        if(this._server != null) this._server.Dispose();
+        public UnityEvent<int> onInstruction = new UnityEvent<int>();
+        [SerializeField] int m_DefaultPort;
+        List<string> m_History = new List<string>();
 
-        this._server = new OscServer(port);
-        this._server.MessageDispatcher.AddCallback(
-            "",
-            this._OnReceiveSign
-        );
-        Debug.Log($"Start listening, port : {port}");
-    }
+        OscServer m_Server;
 
-    /// <summary>
-    /// On receive osc
-    /// </summary>
-    /// <param name="address"></param>
-    /// <param name="data"></param>
-    private async void _OnReceiveSign(string address, OscDataHandle data)
-    {
-        await UniTask.WaitForFixedUpdate();
-        if(!this._history.Contains(address))
+        void Start()
         {
-            Debug.Log("add");
-            this.onSign.Invoke(address);
-            this._history.Add(address);
-            this._AvoidSameTimer(address);
+            Set(m_DefaultPort);
         }
-    }
 
-    private async void _AvoidSameTimer(string address)
-    {
-        await UniTask.Delay(100);
-        this._history.Remove(address);
+        /// <summary>
+        /// set
+        /// </summary>
+        /// <param name="port"></param>
+        public void Set(int port)
+        {
+            if(m_Server != null) m_Server.Dispose();
+
+            m_Server = new OscServer(port);
+            m_Server.MessageDispatcher.AddCallback(
+                "/instruction",
+                _OnReceiveSign
+            );
+            Debug.Log($"Start listening, port : {port}");
+        }
+
+        /// <summary>
+        /// On receive osc
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="data"></param>
+        private async void _OnReceiveSign(string address, OscDataHandle data)
+        {
+            await UniTask.WaitForFixedUpdate();
+            if(!m_History.Contains(address))
+            {
+                Debug.Log("add");
+                onInstruction.Invoke(data.GetElementAsInt(0));
+                m_History.Add(address);
+                _AvoidSameTimer(address);
+            }
+        }
+
+        private async void _AvoidSameTimer(string address)
+        {
+            await UniTask.Delay(100);
+            m_History.Remove(address);
+        }
+
     }
 
 }
