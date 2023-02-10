@@ -52,7 +52,6 @@ public class Modal : SingletonMonoBehaviour<Modal>
             Close();
         });
 
-        Open("");
     }
 
     /// <summary>
