@@ -32,7 +32,6 @@ namespace Worship.Gulu
         List<MemberOSCData> m_MemberOSCConfigLsit = new List<MemberOSCData>();
         int? m_CurrentOSCConfigIndex;
 
-        // Start is called before the first frame update
         void Awake()
         {
             m_MemberUIManager.onChangeSelected.AddListener(onChangeSelected);
@@ -43,6 +42,7 @@ namespace Worship.Gulu
         {
             if(i == null)
             {
+                // run before m_EditModeUI.Empty()()
                 m_CurrentOSCConfigIndex = null;
                 m_EditModeUI.DeActivate();
                 m_EditModeUI.Empty();
@@ -52,7 +52,7 @@ namespace Worship.Gulu
                 m_EditModeUI.Activate();
                 while(i > m_MemberOSCConfigLsit.Count - 1)
                 {
-                    // 新規
+                    // new one
                     m_MemberOSCConfigLsit.Add(new MemberOSCData("127.0.0.1", 9998, 9999, "0,1,2"));
                 }
                 m_CurrentOSCConfigIndex = i ?? 0;
