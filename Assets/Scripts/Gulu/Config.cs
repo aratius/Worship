@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Worship.Gulu
 {
 
@@ -20,6 +22,12 @@ namespace Worship.Gulu
     Vertical,
     Circle,
     Cursor
+  }
+
+  public static class ColorSet
+  {
+    public static Color safe = new Color(46f / 255f, 191f / 255f, 73f / 255f);
+    public static Color danger = new Color(188f / 255f, 47f / 255f, 47f / 255f);
   }
 
 }
