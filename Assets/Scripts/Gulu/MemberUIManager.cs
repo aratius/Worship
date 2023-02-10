@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Worship.Gulu;
 
 namespace Worship.Gulu
@@ -8,6 +9,8 @@ namespace Worship.Gulu
 
     public class MemberUIManager : MonoBehaviour
     {
+
+        public UnityEvent<int?> onChangeSelected = new UnityEvent<int?>();
 
         [SerializeField] GameObject m_MemberUIPrefab;
         [SerializeField] MemberUIBackground m_MemberUIBackground;
@@ -24,6 +27,8 @@ namespace Worship.Gulu
 
             Mode.Instance.onPlayMode.AddListener(PlayMode);
             Mode.Instance.onEditMode.AddListener(EditMode);
+
+            onChangeSelected.Invoke(null);
         }
 
         void OnAdd()
@@ -43,6 +48,7 @@ namespace Worship.Gulu
             m_Cross.RemoveMode();
 
             RenameAll();
+            onChangeSelected.Invoke(m_Members.Count - 1);
         }
 
         void OnRemove()
@@ -52,15 +58,18 @@ namespace Worship.Gulu
             m_Cross.AddMode();
 
             RenameAll();
+            onChangeSelected.Invoke(null);
         }
 
         void OnGrab(MemberUI memberUIScript)
         {
             m_Selected = memberUIScript;
             m_Selected.Select();
-            foreach (MemberUI m in m_Members)
+            for(int i = 0; i < m_Members.Count; i++)
             {
+                MemberUI m = m_Members[i];
                 if(m != memberUIScript) m.DeSelect();
+                else onChangeSelected.Invoke(i);
             }
             m_Cross.RemoveMode();
         }
@@ -69,6 +78,7 @@ namespace Worship.Gulu
         {
             foreach (MemberUI m in m_Members) m.DeSelect();
             m_Cross.AddMode();
+            onChangeSelected.Invoke(null);
         }
 
         void PlayMode()
