@@ -21,6 +21,9 @@ namespace Worship.Gulu
             m_MemberUIBackground.onClick.AddListener(DeSelectAll);
             m_Cross.onAdd.AddListener(OnAdd);
             m_Cross.onRemove.AddListener(OnRemove);
+
+            Mode.Instance.onPlayMode.AddListener(PlayMode);
+            Mode.Instance.onEditMode.AddListener(EditMode);
         }
 
         void OnAdd()
@@ -28,7 +31,6 @@ namespace Worship.Gulu
             GameObject memberUI = Instantiate(m_MemberUIPrefab, this.transform);
             MemberUI memberUIScript = memberUI.GetComponent<MemberUI>();
             memberUIScript.onGrab.AddListener(OnGrab);
-            memberUIScript.Name($"Member_{m_Members.Count}");
             m_Members.Add(memberUIScript);
             memberUI.GetComponent<RectTransform>().localPosition = new Vector2(0f, 0f);
 
@@ -39,6 +41,8 @@ namespace Worship.Gulu
                 if(m != memberUIScript) m.DeSelect();
             }
             m_Cross.RemoveMode();
+
+            RenameAll();
         }
 
         void OnRemove()
@@ -46,6 +50,8 @@ namespace Worship.Gulu
             m_Members.Remove(m_Selected);
             Destroy(m_Selected.gameObject);
             m_Cross.AddMode();
+
+            RenameAll();
         }
 
         void OnGrab(MemberUI memberUIScript)
@@ -63,6 +69,23 @@ namespace Worship.Gulu
         {
             foreach (MemberUI m in m_Members) m.DeSelect();
             m_Cross.AddMode();
+        }
+
+        void PlayMode()
+        {
+            foreach (MemberUI m in m_Members) m.PlayMode();
+            m_Cross.gameObject.SetActive(false);
+        }
+
+        void EditMode()
+        {
+            foreach (MemberUI m in m_Members) m.EditMode();
+            m_Cross.gameObject.SetActive(true);
+        }
+
+        void RenameAll()
+        {
+            for(int i = 0; i < m_Members.Count; i++) m_Members[i].Name($"Member_{i}");
         }
 
     }

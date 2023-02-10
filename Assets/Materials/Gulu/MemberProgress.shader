@@ -5,7 +5,6 @@ Shader "Unlit/MemberProgress"
         _MainTex ("Texture", 2D) = "white" {}
         _BaseColor ("BaseColor", Color) = (1., 1., 1., 1)
         _Progress ("Progress", float) = 0.5
-        _Opacity ("Opacity", float) = 1
     }
     SubShader
     {
@@ -42,7 +41,6 @@ Shader "Unlit/MemberProgress"
             fixed4 _BaseColor;
             float4 _MainTex_ST;
             float _Progress;
-            float _Opacity;
 
             v2f vert (appdata v)
             {
@@ -65,7 +63,6 @@ Shader "Unlit/MemberProgress"
                 if(angleNormalized > _Progress) discard;
 
                 fixed4 col = _BaseColor;
-                col.a *= _Opacity;
                 return col;
             }
             ENDCG

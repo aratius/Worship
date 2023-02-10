@@ -169,7 +169,6 @@ GameObject:
   - component: {fileID: 8695939777344622189}
   - component: {fileID: 8695939777344622191}
   - component: {fileID: 8695939777344622188}
-  - component: {fileID: 5420359767542693593}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -231,19 +230,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &5420359767542693593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8695939777344622186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59e8a5c292e41437d826aba49baa579c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MaterialPrefab: {fileID: 2100000, guid: e0e752ab36667479296e3909077468ea, type: 2}
 --- !u!1 &8695939777477747953
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +668,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_NameText: {fileID: 8695939779021625941}
-  m_ProgressMaterial: {fileID: 5420359767542693593}
+  m_MemberProgress: {fileID: 8695939777344622186}
+  m_Hand: {fileID: 8695939777477747953}
+  m_Foot: {fileID: 8695939777238441824}
 --- !u!225 &-6250172547201977223
 CanvasGroup:
   m_ObjectHideFlags: 0
