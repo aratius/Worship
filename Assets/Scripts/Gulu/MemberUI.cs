@@ -15,6 +15,7 @@ namespace Worship.Gulu
         public UnityEvent<MemberUI> onGrab = new UnityEvent<MemberUI>();
 
         [SerializeField] TextMeshProUGUI m_NameText;
+        [SerializeField] MemberProgress m_ProgressMaterial;
 
         RectTransform m_RectTransform;
         CanvasGroup m_Canvas;
@@ -62,11 +63,13 @@ namespace Worship.Gulu
         public void Select()
         {
             m_Canvas.alpha = 1f;
+            m_ProgressMaterial.SetFloat("_Opacity", 1f);
         }
 
         public void DeSelect()
         {
             m_Canvas.alpha = .2f;
+            m_ProgressMaterial.SetFloat("_Opacity", .2f);
         }
 
         void Move(Vector2 position)
