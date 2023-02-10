@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
 
 public class Modal : SingletonMonoBehaviour<Modal>
 {
 
+    public UnityEvent onNo = new UnityEvent();
+    public UnityEvent onYes = new UnityEvent();
+
     [SerializeField] GameObject m_Background;
     [SerializeField] GameObject m_Content;
     [SerializeField] TextMeshProUGUI m_Message;
     [SerializeField] TextMeshProUGUI m_NoMessage;
     [SerializeField] TextMeshProUGUI m_YesMessage;
+    [SerializeField] Button m_NoButton;
+    [SerializeField] Button m_YesButton;
 
     CanvasGroup m_BackgroundCanvas;
     CanvasGroup m_ContentCanvas;
@@ -37,13 +43,16 @@ public class Modal : SingletonMonoBehaviour<Modal>
 
         m_ContentDefaultPosition = m_ContentTransform.localPosition;
 
-        Invoke("_Open", 2f);
-        Invoke("Close", 4f);
-    }
+        m_NoButton.onClick.AddListener(() => {
+            onNo.Invoke();
+            Close();
+        });
+        m_YesButton.onClick.AddListener(() => {
+            onYes.Invoke();
+            Close();
+        });
 
-    void _Open()
-    {
-        Open("hello");
+        Open("");
     }
 
     /// <summary>
