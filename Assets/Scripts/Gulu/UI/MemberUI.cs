@@ -185,6 +185,8 @@ namespace Worship.Gulu
 
         void Hand(bool isUp)
         {
+            m_Status.isRaisingHand = isUp;
+            m_Hand.GetComponent<CanvasGroup>().alpha = isUp ? 1f : .2f;
             Instruction instruction = isUp ? Instruction.HandsUp : Instruction.HandsDown;
             float duration = InstructionUtils.instructionDurationTable[instruction];
             Progress(duration);
@@ -192,6 +194,8 @@ namespace Worship.Gulu
 
         void Stand(bool isUp)
         {
+            m_Status.isStanding = isUp;
+            m_Foot.GetComponent<CanvasGroup>().alpha = isUp ? 1f : .2f;
             Instruction instruction = isUp ? Instruction.StandUp : Instruction.SitDown;
             float duration = InstructionUtils.instructionDurationTable[instruction];
             Progress(duration);

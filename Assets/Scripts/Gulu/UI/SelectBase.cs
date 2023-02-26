@@ -13,7 +13,7 @@ namespace Worship.Gulu
 
         protected Button m_SelectedButton;
 
-        void Start()
+        void Awake()
         {
             foreach (Button button in m_Buttons)
             {
