@@ -54,6 +54,7 @@ namespace Worship.Gulu
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if(ModeManager.Instance.mode == Mode.Play) return;
             m_IsGrabbing = true;
             onGrab.Invoke(this);
         }

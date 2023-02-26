@@ -16,11 +16,11 @@ namespace Worship.Gulu
 
         void Awake()
         {
-            m_ButtonPlaymode.onClick.AddListener(Mode.Instance.PlayMode);
-            m_ButtonEditmode.onClick.AddListener(Mode.Instance.EditMode);
+            m_ButtonPlaymode.onClick.AddListener(ModeManager.Instance.PlayMode);
+            m_ButtonEditmode.onClick.AddListener(ModeManager.Instance.EditMode);
 
-            Mode.Instance.onPlayMode.AddListener(PlayMode);
-            Mode.Instance.onEditMode.AddListener(EditMode);
+            ModeManager.Instance.onPlayMode.AddListener(PlayMode);
+            ModeManager.Instance.onEditMode.AddListener(EditMode);
         }
 
         void PlayMode()

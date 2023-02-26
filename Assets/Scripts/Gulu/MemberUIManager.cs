@@ -25,8 +25,8 @@ namespace Worship.Gulu
             m_Cross.onAdd.AddListener(OnAdd);
             m_Cross.onRemove.AddListener(OnRemove);
 
-            Mode.Instance.onPlayMode.AddListener(PlayMode);
-            Mode.Instance.onEditMode.AddListener(EditMode);
+            ModeManager.Instance.onPlayMode.AddListener(PlayMode);
+            ModeManager.Instance.onEditMode.AddListener(EditMode);
 
             onChangeSelected.Invoke(null);
         }
@@ -76,6 +76,7 @@ namespace Worship.Gulu
 
         void DeSelectAll()
         {
+            if(ModeManager.Instance.mode == Mode.Play) return;
             foreach (MemberUI m in m_Members) m.DeSelect();
             m_Cross.AddMode();
             onChangeSelected.Invoke(null);
