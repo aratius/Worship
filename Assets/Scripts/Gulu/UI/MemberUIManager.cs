@@ -38,13 +38,11 @@ namespace Worship.Gulu
         void PlayMode()
         {
             foreach (MemberUI m in m_Members) m.PlayMode();
-            m_Cross.gameObject.SetActive(false);
         }
 
         void EditMode()
         {
             foreach (MemberUI m in m_Members) m.EditMode();
-            m_Cross.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -73,7 +71,6 @@ namespace Worship.Gulu
         public void Collide(int i)
         {
             Debug.Log("### Collide");
-            // TODO: MemberUIの色変化
             m_Members[i].Collide();
         }
 

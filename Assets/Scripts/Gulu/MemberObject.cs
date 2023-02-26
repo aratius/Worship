@@ -29,7 +29,8 @@ namespace Worship.Gulu
             Debug.Log("### OnTriggerEnter");
             // TODO: タグつけた方が良さそう
             // TODO: 相手のShape取得
-            onCollided.Invoke(Sign.Hand);
+            Sign sign = other.gameObject.GetComponent<SignIdentifier>().value;
+            onCollided.Invoke(sign);
         }
 
     }

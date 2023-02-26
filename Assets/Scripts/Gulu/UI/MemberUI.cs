@@ -89,6 +89,7 @@ namespace Worship.Gulu
             m_Hand.SetActive(true);
             m_Foot.SetActive(true);
             Select();
+            Die();
         }
 
         public void EditMode()
@@ -104,7 +105,7 @@ namespace Worship.Gulu
 
         public void Live()
         {
-            if(m_Status.isLiving) return;
+            if(m_Status.isLiving && m_StatusSeq != null) return;
             if(m_StatusSeq != null) m_StatusSeq.Kill();
             m_StatusSeq = DOTween.Sequence();
             m_StatusSeq.SetLoops(-1, LoopType.Restart);
@@ -114,7 +115,7 @@ namespace Worship.Gulu
 
         public void Die()
         {
-            if(!m_Status.isLiving) return;
+            if(!m_Status.isLiving && m_StatusSeq != null) return;
             if(m_StatusSeq != null) m_StatusSeq.Kill();
             m_StatusSeq = DOTween.Sequence();
             m_BodySeq.SetLoops(-1, LoopType.Restart);

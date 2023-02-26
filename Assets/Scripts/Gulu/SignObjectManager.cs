@@ -35,6 +35,13 @@ namespace Worship.Gulu
         void Update()
         {
 
+            // UI などが操作されている場合は処理しない
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Up();
+                return;
+            }
+
             if(Input.GetMouseButtonDown(0))
             {
                 Down(ScreenToWorldPoint(Input.mousePosition));
@@ -91,6 +98,7 @@ namespace Worship.Gulu
 
         void Up()
         {
+            if(m_Current == null) return;
             m_Current.Release(m_Speed.value);
             m_Current.SetDirection(new Vector2(Mathf.Sign(m_MoveSpeed.x), Mathf.Sign(m_MoveSpeed.y)));
             m_Current = null;
