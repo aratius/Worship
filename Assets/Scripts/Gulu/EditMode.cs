@@ -32,6 +32,8 @@ namespace Worship.Gulu
         List<MemberOSCData> m_MemberOSCConfigLsit = new List<MemberOSCData>();
         int? m_CurrentOSCConfigIndex;
 
+        public List<MemberOSCData> memberOSCConfigLsit => m_MemberOSCConfigLsit;
+
         void Awake()
         {
             m_MemberUIManager.onChangeSelected.AddListener(onChangeSelected);

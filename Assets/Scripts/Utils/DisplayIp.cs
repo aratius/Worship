@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisplayIp : MonoBehaviour
 {
@@ -13,18 +14,25 @@ public class DisplayIp : MonoBehaviour
 
     void Start()
     {
-        this._Show();
+        Show();
     }
 
     public void Next()
     {
-        this._crr++;
-        this._Show();
+        _crr++;
+        Show();
     }
 
-    private void _Show()
+    private void Show()
     {
-        this.GetComponent<Text>().text = this.m_IpGetter.ipList[this._crr % this.m_IpGetter.ipList.Count];
+        if(GetComponent<Text>() != null)
+        {
+            GetComponent<Text>().text = this.m_IpGetter.ipList[this._crr % this.m_IpGetter.ipList.Count];
+        }
+        else if(GetComponent<TMP_Text>() != null)
+        {
+            GetComponent<TMP_Text>().text = this.m_IpGetter.ipList[this._crr % this.m_IpGetter.ipList.Count];
+        }
     }
 
 }

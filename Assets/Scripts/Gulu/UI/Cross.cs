@@ -29,6 +29,7 @@ namespace Worship.Gulu
                 if(m_IsAddMode) onAdd.Invoke();
                 else onRemove.Invoke();
             });
+
             AddMode();
         }
 

@@ -31,6 +31,61 @@ namespace Worship.Gulu
             onChangeSelected.Invoke(null);
         }
 
+        /// <summary>
+        /// Common
+        /// </summary>
+
+        void PlayMode()
+        {
+            foreach (MemberUI m in m_Members) m.PlayMode();
+            m_Cross.gameObject.SetActive(false);
+        }
+
+        void EditMode()
+        {
+            foreach (MemberUI m in m_Members) m.EditMode();
+            m_Cross.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Play Mode
+        /// </summary>
+
+        public RectTransform GetPosition(int i)
+        {
+            return m_Members[i].GetComponent<RectTransform>();
+        }
+
+        public void Live(int i)
+        {
+            Debug.Log("### Live");
+            // TODO: 緑点滅
+            m_Members[i].Live();
+        }
+
+        public void Die(int i)
+        {
+            Debug.Log("### Die");
+            // TODO: 赤点滅
+            m_Members[i].Die();
+        }
+
+        public void Collide(int i)
+        {
+            Debug.Log("### Collide");
+            // TODO: MemberUIの色変化
+            m_Members[i].Collide();
+        }
+
+        public bool Check(int i, Sign sign)
+        {
+            return m_Members[i].Check(sign);
+        }
+
+        /// <summary>
+        /// Edit Mode
+        /// </summary>
+
         void OnAdd()
         {
             GameObject memberUI = Instantiate(m_MemberUIPrefab, this.transform);
@@ -80,18 +135,6 @@ namespace Worship.Gulu
             foreach (MemberUI m in m_Members) m.DeSelect();
             m_Cross.AddMode();
             onChangeSelected.Invoke(null);
-        }
-
-        void PlayMode()
-        {
-            foreach (MemberUI m in m_Members) m.PlayMode();
-            m_Cross.gameObject.SetActive(false);
-        }
-
-        void EditMode()
-        {
-            foreach (MemberUI m in m_Members) m.EditMode();
-            m_Cross.gameObject.SetActive(true);
         }
 
         void RenameAll()
