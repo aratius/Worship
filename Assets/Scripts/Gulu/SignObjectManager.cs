@@ -26,6 +26,7 @@ namespace Worship.Gulu
         Dictionary<Shape, GameObject> m_PrefabTable = new Dictionary<Shape, GameObject>();
         Vector2 m_MoveSpeed = Vector2.zero;
         Vector2 m_LastPosition = Vector2.zero;
+        Vector2 m_StartPosition = Vector2.zero;
 
         void Start()
         {
@@ -86,6 +87,7 @@ namespace Worship.Gulu
             m_IsGrabbing = true;
 
             m_LastPosition = position;
+            m_StartPosition = position;
         }
 
         void Move(Vector2 position)
@@ -99,8 +101,16 @@ namespace Worship.Gulu
         void Up()
         {
             if(m_Current == null) return;
-            m_Current.Release(m_Speed.value);
-            m_Current.SetDirection(new Vector2(Mathf.Sign(m_MoveSpeed.x), Mathf.Sign(m_MoveSpeed.y)));
+            if(Vector2.Distance(m_StartPosition, m_LastPosition) < .1f)
+            {
+            // 動かしてない時
+                Destroy(m_Current.gameObject);
+            }
+            else
+            {
+                m_Current.Release(m_Speed.value);
+                m_Current.SetDirection(new Vector2(Mathf.Sign(m_MoveSpeed.x), Mathf.Sign(m_MoveSpeed.y)));
+            }
             m_Current = null;
             m_MoveSpeed = Vector2.zero;
             m_IsGrabbing = false;

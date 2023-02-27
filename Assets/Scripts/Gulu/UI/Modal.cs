@@ -67,6 +67,7 @@ public class Modal : SingletonMonoBehaviour<Modal>
             m_Message.text = message;
             m_NoMessage.text = noText;
             m_YesMessage.text = yesText;
+            if(noText == yesText) m_NoMessage.gameObject.transform.parent.gameObject.SetActive(false);
             m_ContentTransform.localPosition = m_ContentDefaultPosition + new Vector3(0f, -10f, 0f);
             m_Background.SetActive(true);
             m_Content.SetActive(true);
@@ -89,6 +90,7 @@ public class Modal : SingletonMonoBehaviour<Modal>
         m_Sequence = DOTween.Sequence().OnComplete(() => {
             m_Background.SetActive(false);
             m_Content.SetActive(false);
+            m_NoMessage.gameObject.transform.parent.gameObject.SetActive(true);
         });
         m_Sequence.Append(
             m_BackgroundCanvas.DOFade(0f, .5f).SetDelay(.3f)

@@ -35,16 +35,24 @@ public class MemberOSC : MonoBehaviour
     void OnDestroy()
     {
         // TODO: クライアント削除
-        m_Client.Dispose();
-        m_Server.Dispose();
+        if(m_Client != null) m_Client.Dispose();
+        if(m_Server != null) m_Server.Dispose();
     }
 
-    public void Init(string ip, int portIncomming, int portOutgoing, string bars)
+    public bool Init(string ip, int portIncomming, int portOutgoing, string bars)
     {
-        // TODO: クライアント作成
-        m_Client = new OscClient(ip, portOutgoing);
-        m_Server = new OscServer(portIncomming);
-        m_Server.MessageDispatcher.AddCallback("/live", (string address, OscDataHandle data) => Live());
+        try
+        {
+            // TODO: クライアント作成
+            m_Client = new OscClient(ip, portOutgoing);
+            m_Server = new OscServer(portIncomming);
+            m_Server.MessageDispatcher.AddCallback("/live", (string address, OscDataHandle data) => Live());
+            return true;
+        } catch(System.Exception e)
+        {
+            Debug.Log("# Err");
+            return false;
+        }
     }
 
     void Live()

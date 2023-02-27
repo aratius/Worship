@@ -12,23 +12,10 @@ namespace Worship.Gulu
 
         public UnityEvent<Sign> onCollided = new UnityEvent<Sign>();
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         void OnTriggerEnter(Collider other)
         {
             Debug.Log("### OnTriggerEnter");
             // TODO: タグつけた方が良さそう
-            // TODO: 相手のShape取得
             Sign sign = other.gameObject.GetComponent<SignIdentifier>().value;
             onCollided.Invoke(sign);
         }

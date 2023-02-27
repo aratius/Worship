@@ -29,15 +29,15 @@ namespace Worship.Gulu
         public void PlayMode()
         {
             if(m_Mode == Mode.Play) return;
-            onPlayMode.Invoke();
             m_Mode = Mode.Play;
+            onPlayMode.Invoke();
         }
 
         public void EditMode()
         {
             if(m_Mode == Mode.Edit) return;
-            onEditMode.Invoke();
             m_Mode = Mode.Edit;
+            onEditMode.Invoke();
         }
     }
 

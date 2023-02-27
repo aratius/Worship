@@ -28,6 +28,7 @@ namespace Worship.Gulu
             // TODO: OSCは死活監視イベントとってMemberUIにstatusトリガー
             // TODO:  衝突はMemberUI色変化と音プログレスのトリガー送る
 
+            bool success = true;
             for(int i = 0; i < m_EditMode.memberOSCConfigLsit.Count; i++)
             {
                 MemberOSCData memberOSCData = m_EditMode.memberOSCConfigLsit[i];
@@ -44,12 +45,18 @@ namespace Worship.Gulu
                 worldPosition.z = 0f;
                 member.transform.localPosition = worldPosition;
 
-                memberOSC.Init(memberOSCData.ip, memberOSCData.portIncomming, memberOSCData.portOutgoing, memberOSCData.bars);
+                success = memberOSC.Init(memberOSCData.ip, memberOSCData.portIncomming, memberOSCData.portOutgoing, memberOSCData.bars);
+                if(!success) break;
                 memberOSC.onLive.AddListener(() => OnLive(index));
                 memberOSC.onDie.AddListener(() => OnDie(index));
 
                 // Objectセットアップ
                 memberObject.onCollided.AddListener((Sign sign) => OnCollided(index, sign));
+            }
+
+            if(!success)
+            {
+                Modal.Instance.Open("OSC Setup failed.", "OK", "OK");
             }
 
         }

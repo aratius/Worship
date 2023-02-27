@@ -88,6 +88,7 @@ namespace Worship.Gulu
             m_MemberProgress.gameObject.SetActive(true);
             m_Hand.SetActive(true);
             m_Foot.SetActive(true);
+            m_Body.raycastTarget = false;
             Select();
             Die();
         }
@@ -97,6 +98,7 @@ namespace Worship.Gulu
             m_MemberProgress.gameObject.SetActive(false);
             m_Hand.SetActive(false);
             m_Foot.SetActive(false);
+            m_Body.raycastTarget = true;
         }
 
         /// <summary>
@@ -108,9 +110,7 @@ namespace Worship.Gulu
             if(m_Status.isLiving && m_StatusSeq != null) return;
             if(m_StatusSeq != null) m_StatusSeq.Kill();
             m_StatusSeq = DOTween.Sequence();
-            m_StatusSeq.SetLoops(-1, LoopType.Restart);
-            m_StatusSeq.Append(m_StatusLamp.DOColor(ColorSet.danger, 0f).SetDelay(.5f));
-            m_StatusSeq.Append(m_StatusLamp.DOColor(Color.black, 0f).SetDelay(.5f));
+            m_StatusSeq.Append(m_StatusLamp.DOColor(ColorSet.safe, .5f));
         }
 
         public void Die()
@@ -118,9 +118,7 @@ namespace Worship.Gulu
             if(!m_Status.isLiving && m_StatusSeq != null) return;
             if(m_StatusSeq != null) m_StatusSeq.Kill();
             m_StatusSeq = DOTween.Sequence();
-            m_BodySeq.SetLoops(-1, LoopType.Restart);
-            m_StatusSeq.Append(m_StatusLamp.DOColor(ColorSet.danger, 0f).SetDelay(.5f));
-            m_StatusSeq.Append(m_StatusLamp.DOColor(Color.black, 0f).SetDelay(.5f));
+            m_StatusSeq.Append(m_StatusLamp.DOColor(ColorSet.danger, .5f));
         }
 
         public void Collide()
